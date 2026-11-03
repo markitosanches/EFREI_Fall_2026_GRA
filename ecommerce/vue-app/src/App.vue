@@ -31,6 +31,8 @@
     :add="addToCart"
     :addInv="addInventory"
     :removeInv="removeInventory"
+    :remItem="removeItem"
+    :updateInv="updateInventory"
     />
     <MainFooter/>
     <SideBar 
@@ -80,6 +82,9 @@ export default{
     },
     addInventory(product){
       this.inventory.push(product)
+    },
+    updateInventory(index, data){
+      this.inventory[index] = data
     },
     removeInventory (index){
       this.inventory.splice(index, 1)

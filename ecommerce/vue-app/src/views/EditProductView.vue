@@ -55,7 +55,7 @@
 <script>
 import ProductDataService from '../services/ProductDataService.js';
 export default{
-  props:['removeInv', 'inventory'],
+  props:['removeInv', 'inventory', 'remItem', 'updateInv'],
   data(){
     return{
       message: null,
@@ -72,11 +72,21 @@ export default{
   },
   methods:{
       updateProduct(){
-        this.submitted = true
+        ProductDataService.update(this.id, this.product)
+        .then(response => {
+          this.updateInv(this.productIndex, this.product)
+          this.submitted = true
+        })
+        .catch((e) =>{
+          this.message = e. response.data.message
+        })
+        
+
       },
       deleteProduct(){
         ProductDataService.delete(this.id)
         .then(response => {
+          this.remItem(this.product.name)
           this.removeInv(this.productIndex)
           this.$router.push({name: 'home'})
         })

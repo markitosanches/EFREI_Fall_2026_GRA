@@ -9,6 +9,9 @@ class ProductDataService{
     get(id){
         return http.get(`/product/${id}`)
     }
+    update(id, data){
+        return http.put(`/product/${id}`, data)
+    }
     delete(id){
         return http.delete(`/product/${id}`)
     }

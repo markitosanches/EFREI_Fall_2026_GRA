@@ -48,7 +48,26 @@ exports.findOne = (req, res) => {
 }
 
 exports.update = (req, res) => {
-
+    const id = req.params.id
+    Product.update(req.body, {
+        where: {id: id}
+    })    
+    .then(num => {
+        if(num == 1){
+            res.send({
+                message: "Product updated"
+            })
+        }else{
+            res.status(400)({
+                message: "Product not found"
+            })
+        }
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: 'Could find the database'
+        })
+    })
 }
 
 
@@ -63,7 +82,7 @@ exports.delete = (req, res) => {
                 message: "Product deleted"
             })
         }else{
-            res.send({
+            res.status(400)({
                 message: "Product not found"
             })
         }
