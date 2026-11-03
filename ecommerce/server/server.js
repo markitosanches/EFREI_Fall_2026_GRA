@@ -2,11 +2,14 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
+const cookieParser = require('cookie-parser')
 
 const corsOptions = {
     origin:'http://localhost:5173',
     credentials: true,
 }
+
+app.use(cookieParser())
 
 app.use(cors(corsOptions))
 
@@ -21,6 +24,7 @@ const db = require('./app/models')
 db.connex.sync()
 
 require('./app/routes/product.route.js')(app)
+require('./app/routes/user.route.js')(app)
 
 const PORT = 8080
 app.listen(PORT, () => {
