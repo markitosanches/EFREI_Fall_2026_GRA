@@ -26,6 +26,7 @@
 
 <script>
 import UserDataService from '../services/UserDataService';
+import { useAuthStore } from '../store/auth';
 
 export default{
   data(){
@@ -36,9 +37,15 @@ export default{
   },
   methods:{
     login(){
+      const authStore = useAuthStore()
       UserDataService.postLogin(this.user)
       .then(response=>{
-
+        // console.log(response.data.user)
+        this.message = null
+        authStore.setUser(response.data.user)
+        localStorage.setItem('token', response.data.user.token )
+        localStorage.setItem('user', JSON.stringify(response.data.user) )
+        this.$router.push('add-product')
       })
       .catch(error =>{
         this.message = error.response.data.message
